@@ -1,0 +1,17 @@
+APP_NAME: :PEACH
+ROOT_URL: "http://www.flypeach.com/tw/home.aspx"
+QUERY_URL: "http://book.flypeach.com/default.aspx?"
+DATE_FORMAT: "%Y-%m-%d"
+TIMEOUT: 30
+DB:
+    HOST: "106.186.30.62:1072"
+    NAME: "lazy_bird"
+    COLLECTION_NAME: "peach"
+DEBUG_MODE: false
+CITY:
+    TO:
+        KIX: "大阪, 關西國際機場 (KIX)"
+        OKA: "沖繩, 那霸機場 (OKA)"
+    FROM:
+        TPE: "台北, 臺灣桃園國際機場 (TPE)"
+        KHH: "高雄, 高雄國際機場 (KHH)"

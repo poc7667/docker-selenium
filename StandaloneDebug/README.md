@@ -1,3 +1,0 @@
-# Debug image template
-
-This folder is not meant to be build directly from the `docker build .` It only stands as a template for creating standalone server debug images. Note usage in the Makefile at the root of this repo.
