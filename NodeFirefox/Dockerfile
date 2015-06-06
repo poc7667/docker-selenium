@@ -30,7 +30,6 @@ RUN apt-get update && apt-get -y upgrade && apt-get -y -qq --force-yes install \
     libssl-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt-dev \
     autoconf libc6-dev ncurses-dev automake libtool bison nodejs  \
     libpq-dev imagemagick
-
 # Install Zsh
 ################## BEGIN INSTALLATION ######################
 RUN git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh \
@@ -50,32 +49,7 @@ RUN echo "alias ls='ls --color=auto'" >> /etc/zsh/zshrc && \
     echo "alias ls='ls --color=auto'" >> /etc/profile &&\
     echo "set term=xterm" >> ~/.vimrc 
 
-# Make ssh dir
-RUN mkdir /root/.ssh/
-# Copy over private key, and set permissions
-# ADD id_rsa /root/.ssh/id_rsa
-# Create known_hosts
-RUN touch /root/.ssh/known_hosts
-# Add bitbuckets key
-RUN ssh-keyscan bitbucket.org >> /root/.ssh/known_hosts
 # Install vim plugins
-RUN mkdir -p ~/.vim/bundle                                          && \
-    cd  ~/.vim/bundle                                                   && \
-    git clone --depth 1 https://github.com/gmarik/Vundle.vim.git        && \
-    git clone --depth 1 https://github.com/majutsushi/tagbar.git        && \
-    git clone --depth 1 https://github.com/Shougo/neocomplete.vim.git   && \
-    git clone --depth 1 https://github.com/scrooloose/nerdtree.git      && \
-    git clone --depth 1 https://github.com/bling/vim-airline.git        && \
-    git clone --depth 1 https://github.com/tpope/vim-fugitive.git       && \
-    git clone --depth 1 https://github.com/jistr/vim-nerdtree-tabs.git  && \
-    git clone --depth 1 https://github.com/mbbill/undotree.git          && \
-    git clone --depth 1 https://github.com/Lokaltog/vim-easymotion.git  && \
-    git clone --depth 1 https://github.com/scrooloose/nerdcommenter.git && \
-    vim +PluginInstall +qall
-
-WORKDIR /tmp
-COPY install_vundles.sh install_vundles.sh
-RUN bash install_vundles.sh
 WORKDIR /tmp
 COPY Gemfile Gemfile
 RUN gem install bundler
@@ -84,12 +58,6 @@ RUN bundle install
 #====================================
 # Scripts to run cron job
 #====================================
-
-# Add crontab file in the cron directory
-ADD cron_lazy_bird /etc/crontab
-# Create the log file to be able to run tail
-RUN touch /var/log/cron.log
-# Use the crontab file
-RUN crontab /etc/crontab
-# Run the command on container startup
-#CMD cron  && tail -f /var/log/cron.log
+# ADD cron_lazy_bird /etc/crontab
+# RUN touch /var/log/cron.log
+# RUN crontab /etc/crontab
